@@ -16,14 +16,46 @@ done
 # Ensure everything in git's home is owned by git user
 chown -R git:git /home/git
 
-if [[ -f /home/git/admin.pub ]] ; then
-		# If the admin.pub key exists then reset gitolite's admin key
-		/bin/su -s /bin/sh -c 'gitolite setup -pk /home/git/admin.pub' git
-else
-		# Even if the admin key does not exist, ensure gitolite's internal
-		# state is synced with the repositiories (eg, git hooks)
-		/bin/su -s /bin/sh -c 'gitolite setup' git
+if [[ ! -d /home/git/repositories/gitolite-admin.git ]]; then
+		echo "FATAL: Repositories volume is not mounted or is empty"
+		echo "       You may bootstrap a repository volume by running the script:"
+		echo "         bootstrap-repositories.sh"
+		echo "       on the host, then using the output_directory as the volume"
+		exit 1
 fi
+
+if [ ! -d /home/git/repositories/.gitolite ] ; then
+		echo "Bootstrapping gitolite..."
+
+		# Preserve existing admin repo, since gitolite setup will overwrite it
+		mv /home/git/repositories/gitolite-admin.git /home/git/repositories/gitolite-admin.git-tmp
+
+		# Setup gitolite with dummy user as having admin access
+		/bin/su -s /bin/sh -c 'gitolite setup -a dummy' git
+
+		# Ensure log directory exists
+		/bin/su -s /bin/sh -c 'mkdir -p /home/git/.gitolite/logs' git
+
+		# Replace gitolite generated admin repo with our own
+		rm -r /home/git/repositories/gitolite-admin.git
+		mv /home/git/repositories/gitolite-admin.git-tmp /home/git/repositories/gitolite-admin.git
+
+		# Reset up hooks
+		su git -c "gitolite setup --hooks-only"
+
+		# Regenerate authorized_keys file based on the new admin repo
+		# Done by triggering the post-update hook
+		su git -c "cd /home/git/repositories/gitolite-admin.git && GL_LIBDIR=$(gitolite query-rc GL_LIBDIR) PATH=$PATH:/home/git/bin hooks/post-update refs/heads/master"
+
+		# Clean up the auto-generated testing repository
+		rm -rf /home/git/repositories/testing.git
+
+		echo "Completed gitolite bootstrap!"
+fi
+
+# Ensure internal gitolite status is syned with config/hooks in repositories
+/bin/su -s /bin/sh -c 'gitolite setup' git
+
 
 printf "\n\n"
 printf "+===========================================\n"
