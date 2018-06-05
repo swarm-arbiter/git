@@ -1,0 +1,69 @@
+#	$OpenBSD: sshd_config,v 1.101 2017/03/14 07:19:07 djm Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+###########################################
+# Only allow ssh 2 connections, not ssh 1
+Protocol 2
+
+###########################################
+# Listen to port 22 on all local addresses
+Port 22
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+PidFile /run/sshd.pid
+
+###########################################
+# Use following keys as Host Keys
+HostKey /etc/ssh/hostkeys/ssh_host_rsa_key
+HostKey /etc/ssh/hostkeys/ssh_host_dsa_key
+HostKey /etc/ssh/hostkeys/ssh_host_ecdsa_key
+HostKey /etc/ssh/hostkeys/ssh_host_ed25519_key
+
+###########################################
+# Logging
+# :TODO: cannt enable logging as relies on syslog daemon, which
+# isn't present in this container...
+#SyslogFacility AUTH
+#LogLevel INFO
+
+###########################################
+# Kill dead or inactive connections
+LoginGraceTime 30s     # drop connection if not authed within 30s of handshake
+ClientAliveInterval 20 # send checkalive messages every 20 seconds
+ClientAliveCountMax 3  # kill connection after 3 checkalive messages have been ignored
+TCPKeepAlive yes       # kill connection if TCP connection drops out
+
+# If over 10 connections have been started but not authenticated then randomly drop
+# between 30% and 100% of new connections, rejecting all connections once there are 50
+# open un-authenticated connections. This /should/ help prevent DDOSes
+MaxStartups 10:30:50
+
+###########################################
+# Disallow all authentication methods except for public key
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+PubkeyAuthentication yes
+
+###########################################
+# Only allow git user to login via ssh, no-one else
+PermitRootLogin no
+AllowUsers git
+# Only look in .ssh/authorized_keys, nowhere else
+AuthorizedKeysFile	.ssh/authorized_keys
+
+###########################################
+# Misc Options
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+GatewayPorts no
+X11Forwarding no
+X11DisplayOffset 10
+X11UseLocalhost yes
+PermitTTY yes
+UseDNS no    # don't do reverse lookup of the DNS of the client to validate it
+Banner none  # Don't display a banner before login
+PrintMotd no # Don't print motd after login
