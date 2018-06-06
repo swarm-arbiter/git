@@ -1,9 +1,16 @@
 FROM alpine:3.7
 
+# Create git group and user
+RUN addgroup git -g 10000
+RUN adduser  git -h /home/git \
+								 -s /bin/sh \
+								 -G git \
+								 -u 10000 \
+								 -D
+
 # Create nginx group and user
 RUN addgroup nginx -g 10001
-RUN adduser  nginx -h /home/nginx \
-								 	 -s /sbin/nologin \
+RUN adduser  nginx -s /sbin/nologin \
 								 	 -G nginx \
 								 	 -u 10001 \
 								 	 -D

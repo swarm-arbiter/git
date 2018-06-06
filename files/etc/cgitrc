@@ -1,0 +1,40 @@
+#############################################################
+# Enable additional features when browsing a repository
+enable-blame=1
+enable-commit-graph=1
+max-stats=year
+
+# Display side-by-side diffs rather than unidiffs
+side-by-side-diffs=1
+
+# list of allowed formats to download a snapshot of repositories for
+snapshots=zip tar.gz
+#############################################################
+
+
+
+#############################################################
+# Link generation
+
+# Remove the .git suffix on end of git repository names
+remove-suffix=1
+#############################################################
+
+
+
+#############################################################
+# Where to find repositories and what to display
+
+# List of repositories relative to the scan path
+project-list=/home/git/project.list
+
+# The root location to search for git repositories
+scan-path /home/git/repositories
+#############################################################
+
+
+
+#############################################################
+# Misc
+enable-http-clone=0
+#############################################################
