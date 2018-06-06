@@ -1,7 +1,7 @@
 run:
 	sudo docker run -it \
 		-v "$(shell pwd)/vols/hostkeys:/etc/ssh/hostkeys" \
-		-v "$(shell pwd)/vols/repositories:/home/git/repositories" \
+		-v "$(shell pwd)/vols/githome:/home/git" \
 		"gitolite:$(shell cat VERSION)"
 
 build:

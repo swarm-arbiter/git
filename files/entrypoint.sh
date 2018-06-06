@@ -17,14 +17,14 @@ done
 chown -R git:git /home/git
 
 if [[ ! -d /home/git/repositories/gitolite-admin.git ]]; then
-		echo "FATAL: Repositories volume is not mounted or is empty"
+		echo "FATAL: Cannot find gitolite admin repository"
 		echo "       You may bootstrap a repository volume by running the script:"
 		echo "         bootstrap-repositories.sh"
 		echo "       on the host, then using the output_directory as the volume"
 		exit 1
 fi
 
-if [ ! -d /home/git/repositories/.gitolite ] ; then
+if [ ! -d /home/git/.gitolite ] ; then
 		echo "Bootstrapping gitolite..."
 
 		# Preserve existing admin repo, since gitolite setup will overwrite it

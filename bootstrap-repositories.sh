@@ -10,8 +10,7 @@ if [[ "$#" < 1 ]]; then
 		exit 1
 fi
 
-mkdir -p ${1}
-OUTDIR=$(readlink --canonicalize ${1})
+OUTDIR=$(readlink -m --canonicalize ${1})
 
 if [ ! -f ~/.ssh/id_rsa.pub ] || [ ! -f ~/.ssh/id_rsa.pub ]; then
 		echo "Current user does not have an ssh key!"
@@ -45,8 +44,6 @@ mkdir -p ${WORKDIR}/gitolite-admin
 
 cd ${WORKDIR}/gitolite-admin
 
-
-
 #############################################################
 # Setup gitolite admin repository
 git init
@@ -68,7 +65,8 @@ git commit -m "Create gitolite admin repository"
 
 #############################################################
 # Setup output directory
-mkdir -p "${OUTDIR}/gitolite-admin.git"
+sudo mkdir -p "${OUTDIR}/gitolite-admin.git"
+sudo chown -R $(whoami):$(whoami) $OUTDIR
 cd "${OUTDIR}/gitolite-admin.git"
 
 git clone --local --bare $WORKDIR/gitolite-admin .
