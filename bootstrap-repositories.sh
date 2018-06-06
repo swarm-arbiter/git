@@ -10,6 +10,7 @@ if [[ "$#" < 1 ]]; then
 		exit 1
 fi
 
+mkdir -p ${1}
 OUTDIR=$(readlink --canonicalize ${1})
 
 if [ ! -f ~/.ssh/id_rsa.pub ] || [ ! -f ~/.ssh/id_rsa.pub ]; then
@@ -19,8 +20,9 @@ fi
 
 #############################################################
 # Check if output directory already exists
-if [[ -e $OUTDIR ]]; then
-		echo "Output directory already exists, continuing will destroy the current contents"
+if [ -e $OUTDIR ] && [ ! $(ls $OUTDIR) = '' ]; then
+		echo "Output directory already exists and is non empty"
+		echo "Continuing will destroy the current contents"
 	  read -r -p "Are you sure you wish to continue? [y/n]" response
 		response=${response,,} # tolower
 		if [[ ! $response =~ ^(yes|y|no|n) ]]; then
