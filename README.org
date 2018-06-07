@@ -10,3 +10,28 @@
 
 	Hence the data flow for a request is:
 	=client ---[tcp socket]---> lighttpd ---[execute cgi script]---> cgit.cgi=
+
+* Volumes
+
+	This container is designed to browse repositories within =/home/git/repositories=.
+
+	=/home/git/projects.list= should contain a list of paths of git repositories relative to =/home/git/repositories=
+
+	IE, the directory structure is:
+
+	- =/home/git/=
+		- =projects.list=
+		- =repositories/=
+			- =test.git/=
+			- =thing.git/=
+
+  In this scenario, projects.list would contain:
+
+	#+BEGIN_SRC pre
+test.git
+thing.git
+	#+END_SRC
+
+	#+BEGIN_SIDENOTE
+	Note that this directory structure is designed to be compatible with the =/home/git= of the gitolite container. Hence the same host directory may be mounted as =/home/git= in containers of both types.
+	#+END_SIDENOTE
