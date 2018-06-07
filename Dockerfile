@@ -9,7 +9,7 @@ RUN adduser  git -h /home/git \
 								 -D
 
 # Install packages
-RUN apk add --no-cache git cgit lighttpd
+RUN apk add --no-cache cgit lighttpd
 
 # Copy in all files
 RUN rm -rf /etc/nginx
