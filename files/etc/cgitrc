@@ -26,10 +26,10 @@ remove-suffix=1
 # Where to find repositories and what to display
 
 # List of repositories relative to the scan path
-project-list=/home/git/project.list
+project-list=/home/git/projects.list
 
 # The root location to search for git repositories
-scan-path /home/git/repositories
+scan-path=/home/git/repositories
 #############################################################
 
 
