@@ -87,7 +87,7 @@ readme=docs/index
 readme=docs/00-index.org
 
 # List of repositories relative to the scan path
-#project-list=/home/git/projects.list
+project-list=/home/git/projects.list
 
 # The root location to search for git repositories
 scan-path=/home/git/repositories
