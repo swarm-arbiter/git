@@ -53,4 +53,16 @@
 
 	The full steps are as follows:
 	1. Run =bootstrap-repositories.sh [output_directory]= on a workstation with a user with a public key - this user is made an admin of the new server, and the key in =~/.ssh/id_rsa= becomes the only key that may use the server
-	2.
+	2. Mount the created directory as =/home/git/repositories= in the container
+
+  An alternative is to bootstrap the repositories into the =repositories= subdirectory of a volume which is mounted as =/home/git=. This will then allow for access the generated =projects.list= file etc
+
+	The file =/home/git/.gitolite.rc= may also be edited if the entire =/home/git= directory is mounted as a volume.
+
+* .gitolite.rc Recomendations
+
+** cgit descriptions
+
+	If using cgit we want to update the repositories =description= file in the root of the =.git= directory based on the =desc= set in the =gitolite-admin/conf= files.
+
+	This can be enabled by enabling the "cgit" feature (do a search for cgit in =/home/git/.gitolite.rc= and uncomment the line).
