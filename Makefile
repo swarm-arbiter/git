@@ -1,6 +1,6 @@
 run:
-		sudo docker run -it \
-		-v "/home/jamie/Documents/dev/web/infrastructure/containers/gitolite/vols/githome:/home/git" \
+		sudo docker run -itd \
+		-v "/docker/git/home:/home/git" \
 		"cgit:$(shell cat VERSION)"
 
 build:
