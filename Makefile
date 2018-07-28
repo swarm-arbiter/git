@@ -4,4 +4,4 @@ run:
 		"cgit:$(shell cat VERSION)"
 
 build:
-	sudo docker build . -t "cgit:$(shell cat VERSION)"
+	sudo docker build . -t "registry.terry.cloud/core/cgit:$(shell cat VERSION)"

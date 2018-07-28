@@ -48,8 +48,13 @@ thing.git
 	Username/password combinations are found in =/etc/lighttpd/.passwd=
 
 ** Add/Edit User
+
+	 Need to install =apache2-utils= package to have htdigest command!
+
 	 To create a new entry/edit password for existing entry run the following command on the workstation: \\
 	 =htdigest ./files/etc/lighttpd/.passwd cgit [username]= \\
 	 This command will then interactively prompt for a new password.
+
+	 Note that =cgit= is the "Realm", we can have multiple realms in a single password file and grant different permissions to each.
 
 	 You then need to rebuild the docker container and deploy it.
