@@ -5,7 +5,7 @@ run:
 		"gitolite:$(shell cat VERSION)"
 
 build:
-	sudo docker build . -t "gitolite:$(shell cat VERSION)"
+	sudo docker build . -t "registry.terry.cloud/core/gitolite:$(shell cat VERSION)"
 
 clean:
 	sudo rm -rf vols/hostkeys
