@@ -2,14 +2,14 @@ version: '3'
 
 services:
   backend:
-    image: registry.terry.cloud/core/gitolite:0.2.1
+    image: registry.terry.cloud/core/gitolite:1.0.0
     volumes:
       - ${SRV_APPDATA}/persistent/home:/home/git
       - ${SRV_APPDATA}/persistent/hostkeys:/etc/ssh/hostkeys
     ports:
       - '814:22'
   frontend:
-    image: registry.terry.cloud/core/cgit:0.2.2
+    image: registry.terry.cloud/core/cgit:1.0.0
     ports:
       - '1814:80'
     volumes:
