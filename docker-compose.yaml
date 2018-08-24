@@ -8,6 +8,8 @@ services:
       - ${SRV_APPDATA}/persistent/hostkeys:/etc/ssh/hostkeys
     ports:
       - '814:22'
+    deploy:
+      replicas: 1
   frontend:
     image: registry.terry.cloud/core/cgit:1.0.1
     ports:
@@ -15,3 +17,18 @@ services:
     volumes:
       - ${SRV_APPDATA}/persistent/home:/home/git
       - ${SRV_APPDATA}/resources/frontend-htpasswd:/etc/lighttpd/.passwd
+    networks:
+      - revprox_ingress
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.docker.network=revprox_ingress"
+        - "traefik.port=80"
+        - "traefik.backend=cgit"
+        - "traefik.frontend.rule=Host:cgit.terry.cloud"
+
+networks:
+  default:
+    driver: overlay
+  revprox_ingress:
+    external: true
