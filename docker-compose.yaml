@@ -12,8 +12,6 @@ services:
       replicas: 1
   frontend:
     image: registry.terry.cloud/core/cgit:1.0.1
-    ports:
-      - '1814:80'
     volumes:
       - ${SRV_APPDATA}/persistent/home:/home/git
       - ${SRV_APPDATA}/resources/frontend-htpasswd:/etc/lighttpd/.passwd
