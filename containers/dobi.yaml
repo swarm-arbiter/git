@@ -1,0 +1,16 @@
+meta:
+  project: git
+  default: build
+
+alias=build:
+  tasks: [ 'gitolite', 'cgit' ]
+
+
+# Images
+image=gitolite:
+  image: 'registry.terry.cloud/core/gitolite'
+  context: gitolite
+
+image=cgit:
+  image: 'registry.terry.cloud/core/cgit'
+  context: cgit
