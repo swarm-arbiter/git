@@ -2,15 +2,46 @@ meta:
   project: git
   default: build
 
+##########################################################
+# Tasks
 alias=build:
-  tasks: [ 'gitolite', 'cgit' ]
+  tasks: [ 'base:tag', 'gitolite:tag', 'cgit:tag' ]
+
+alias=clean:
+  tasks: [ 'base:rm', 'gitolite:rm', 'cgit:rm' ]
+##########################################################
 
 
+
+##########################################################
 # Images
+image=base:
+  image: 'registry.terry.cloud/core/git_base'
+  context: base
+  tags:
+    - 'latest'
+    - '{git.short-sha}'
+    - '{git.sha}'
+
 image=gitolite:
   image: 'registry.terry.cloud/core/gitolite'
   context: gitolite
+  depends:
+    - base
+  tags:
+    - 'latest'
+    - '{git.short-sha}'
+    - '{git.sha}'
+    - '{env.GITOLITE_VERSION}'
 
 image=cgit:
   image: 'registry.terry.cloud/core/cgit'
   context: cgit
+  depends:
+    - base
+  tags:
+    - 'latest'
+    - '{git.short-sha}'
+    - '{git.sha}'
+    - '{env.CGIT_VERSION}'
+##########################################################
