@@ -1,0 +1,60 @@
+* What
+
+	This container provides a web frontend for browsing git repositories, powered by cgit.
+
+* Implementation
+
+	cgit is a cgi script, hence we require a web server to parse the HTTP request and pass it on to cgit.
+
+	We use "lighttpd" which has native support for cgi scripts.
+
+	Hence the data flow for a request is:
+	=client ---[tcp socket]---> lighttpd ---[execute cgi script]---> cgit.cgi=
+
+* Volumes
+
+	This container is designed to browse repositories within =/home/git/repositories=.
+
+	=/home/git/projects.list= should contain a list of paths of git repositories relative to =/home/git/repositories=
+
+	IE, the directory structure is:
+
+	- =/home/git/=
+		- =projects.list=
+		- =repositories/=
+			- =test.git/=
+			- =thing.git/=
+
+  In this scenario, projects.list would contain:
+
+	#+BEGIN_SRC pre
+test.git
+thing.git
+	#+END_SRC
+
+	#+BEGIN_SIDENOTE
+	Note that this directory structure is designed to be compatible with the =/home/git= of the gitolite container. Hence the same host directory may be mounted as =/home/git= in containers of both types.
+	#+END_SIDENOTE
+
+* Authentication
+
+	For now http basic authentication is used to authenticate users, setup by following: https://www.cyberciti.biz/tips/lighttpd-secure-digest-authentication-mod_auth.html
+
+	- :TODO: This should be upgraded to an sso system
+	- :TODO: We should use https!
+
+	The htdigest backend is used meaning the client sends only the hash of the password to the server.
+
+	Username/password combinations are found in =/etc/lighttpd/.passwd=
+
+** Add/Edit User
+
+	 Need to install =apache2-utils= package to have htdigest command!
+
+	 To create a new entry/edit password for existing entry run the following command on the workstation: \\
+	 =htdigest ./files/etc/lighttpd/.passwd cgit [username]= \\
+	 This command will then interactively prompt for a new password.
+
+	 Note that =cgit= is the "Realm", we can have multiple realms in a single password file and grant different permissions to each.
+
+	 You then need to rebuild the docker container and deploy it.

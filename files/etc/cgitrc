@@ -1,0 +1,94 @@
+#############################################################
+# Enable additional features when browsing a repository
+enable-blame=1
+enable-commit-graph=1
+max-stats=year
+enable-index-owner=0
+enable-log-filecount=1
+enable-log-linecount=1
+
+# Display side-by-side diffs rather than unidiffs
+side-by-side-diffs=1
+
+# list of allowed formats to download a snapshot of repositories for
+snapshots=zip tar.gz
+#############################################################
+
+
+
+#############################################################
+# Link generation
+
+# Remove the .git suffix on end of git repository names
+remove-suffix=1
+#############################################################
+
+
+
+#############################################################
+# Appearance of repository browser
+root-title=cgit.terry.cloud
+logo=/cgit.png
+logo-link=/
+
+section-sort=1
+section-from-path=1
+#############################################################
+
+
+
+#############################################################
+# Misc
+enable-http-clone=0
+#############################################################
+
+
+
+#############################################################
+# Where to find repositories and what to display
+#
+# NOTE: scan-path needs to come after various other options, so
+# leave it last"!
+
+# Which files to check for a readme relative to root of repository
+readme=README.org
+readme=README.md
+readme=README.txt
+readme=README
+readme=readme.org
+readme=readme.md
+readme=readme.txt
+readme=readme
+readme=INDEX.org
+readme=INDEX.md
+readme=INDEX.txt
+readme=INDEX
+readme=index.org
+readme=index.md
+readme=index.txt
+readme=index
+readme=00-index.org
+readme=docs/README.org
+readme=docs/README.md
+readme=docs/README.txt
+readme=docs/README
+readme=docs/readme.org
+readme=docs/readme.md
+readme=docs/readme.txt
+readme=docs/readme
+readme=docs/INDEX.org
+readme=docs/INDEX.md
+readme=docs/INDEX.txt
+readme=docs/INDEX
+readme=docs/index.org
+readme=docs/index.md
+readme=docs/index.txt
+readme=docs/index
+readme=docs/00-index.org
+
+# List of repositories relative to the scan path
+project-list=/home/git/projects.list
+
+# The root location to search for git repositories
+scan-path=/home/git/repositories
+#############################################################
