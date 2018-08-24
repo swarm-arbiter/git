@@ -1,1 +1,4 @@
-vols/
+# Ignore Emacs Backup Files
+*#*#
+*.#*
+*~
