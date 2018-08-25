@@ -1,0 +1,6 @@
+- home/:
+    owner: 10000
+    group: 10000
+- hostkeys/:
+    owner: 10000
+    group: 10000
