@@ -16,7 +16,7 @@ alias=clean:
 ##########################################################
 # Images
 image=base:
-  image: 'registry.terry.cloud/core/git_base'
+  image: 'registry.terry.cloud/stacks/git_base'
   context: base
   tags:
     - 'latest'
@@ -24,7 +24,7 @@ image=base:
     - '{git.sha}'
 
 image=gitolite:
-  image: 'registry.terry.cloud/core/gitolite'
+  image: 'registry.terry.cloud/stacks/gitolite'
   context: gitolite
   depends:
     - base
@@ -35,7 +35,7 @@ image=gitolite:
     - '{env.GITOLITE_VERSION}'
 
 image=cgit:
-  image: 'registry.terry.cloud/core/cgit'
+  image: 'registry.terry.cloud/stacks/cgit'
   context: cgit
   depends:
     - base
