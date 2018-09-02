@@ -7,7 +7,7 @@ services:
       - ${SRV_APPDATA}/persistent/home:/home/git
       - ${SRV_APPDATA}/persistent/hostkeys:/etc/ssh/hostkeys
     ports:
-      - '814:22'
+      - '{{= hosts.backend.port }}:22'
     networks:
       - internal
     deploy:
@@ -23,9 +23,9 @@ services:
       replicas: 1
       labels:
         - "traefik.docker.network=revprox_ingress"
-        - "traefik.port=80"
-        - "traefik.backend=cgit"
-        - "traefik.frontend.rule=Host:cgit.terry.cloud"
+        - "traefik.port={{= hosts.frontend.port }}"
+        - "traefik.backend={{= hosts.frontend.domain }}"
+        - "traefik.frontend.rule=Host:{{= hosts.frontend.domain }}"
 
 networks:
   internal:

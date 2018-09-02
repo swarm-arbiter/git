@@ -1,0 +1,6 @@
+hosts:
+  frontend:
+    domain: git.example.com
+    port: 80
+  backend:
+    port: 22
