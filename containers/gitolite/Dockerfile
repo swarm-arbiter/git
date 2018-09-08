@@ -1,4 +1,4 @@
-FROM registry.terry.cloud/core/git_base:latest
+FROM registry.terry.cloud/stack/git_base:latest
 
 # Install packages
 RUN apk add --no-cache gitolite openssh
@@ -14,7 +14,8 @@ COPY files/sshd_config /etc/ssh/sshd_config
 COPY files/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-COPY VERSION /
+ARG GITOLITE_VERSION
+RUN echo ${GITOLITE_VERSION} > /VERSION
 
 EXPOSE 22
 

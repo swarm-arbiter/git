@@ -7,16 +7,22 @@ meta:
 alias=build:
   tasks: [ 'base:tag', 'gitolite:tag', 'cgit:tag' ]
 
+alias=push:
+  tasks: [ 'base:tag', 'gitolite:push', 'cgit:push' ]
+
 alias=clean:
   tasks: [ 'base:rm', 'gitolite:rm', 'cgit:rm' ]
 ##########################################################
 
-
+env=settings:
+  variables:
+    - 'GITOLITE_VERSION=1.0.0'
+    - 'CGIT_VERSION=1.0.1'
 
 ##########################################################
 # Images
 image=base:
-  image: 'registry.terry.cloud/stacks/git_base'
+  image: 'registry.terry.cloud/stack/git_base'
   context: base
   tags:
     - 'latest'
@@ -24,10 +30,13 @@ image=base:
     - '{git.sha}'
 
 image=gitolite:
-  image: 'registry.terry.cloud/stacks/gitolite'
+  image: 'registry.terry.cloud/stack/git_gitolite'
   context: gitolite
+  args:
+    GITOLITE_VERSION: '{env.GITOLITE_VERSION}'
   depends:
     - base
+    - settings
   tags:
     - 'latest'
     - '{git.short-sha}'
@@ -35,10 +44,13 @@ image=gitolite:
     - '{env.GITOLITE_VERSION}'
 
 image=cgit:
-  image: 'registry.terry.cloud/stacks/cgit'
+  image: 'registry.terry.cloud/stack/git_cgit'
   context: cgit
+  args:
+    CGIT_VERSION: '{env.CGIT_VERSION}'
   depends:
     - base
+    - settings
   tags:
     - 'latest'
     - '{git.short-sha}'

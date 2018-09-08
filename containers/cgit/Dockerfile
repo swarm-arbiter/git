@@ -1,4 +1,4 @@
-FROM registry.terry.cloud/core/git_base:latest
+FROM registry.terry.cloud/stack/git_base:latest
 
 # Install packages
 RUN apk add --no-cache cgit lighttpd lighttpd-mod_auth
@@ -8,7 +8,8 @@ RUN rm -rf /etc/nginx
 COPY files/ /
 RUN chmod +x /entrypoint.sh
 
-COPY VERSION /
+ARG CGIT_VERSION
+RUN echo ${CGIT_VERSION} > /VERSION
 
 EXPOSE 80
 

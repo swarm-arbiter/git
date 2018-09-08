@@ -2,7 +2,7 @@ version: '3'
 
 services:
   gitolite:
-    image: registry.terry.cloud/stacks/gitolite:1.0.0
+    image: registry.terry.cloud/stack/git_gitolite:1.0.0
     volumes:
       - ${SRV_APPDATA}/persistent/home:/home/git
       - ${SRV_APPDATA}/persistent/hostkeys:/etc/ssh/hostkeys
@@ -13,7 +13,7 @@ services:
     deploy:
       replicas: 1
   cgit:
-    image: registry.terry.cloud/stacks/cgit:1.0.1
+    image: registry.terry.cloud/stack/git_cgit:1.0.1
     volumes:
       - ${SRV_APPDATA}/persistent/home:/home/git
       - ${SRV_APPDATA}/resources/frontend-htpasswd:/etc/lighttpd/.passwd
