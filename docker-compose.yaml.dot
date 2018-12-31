@@ -4,8 +4,8 @@ services:
   gitolite:
     image: registry.terry.cloud/stack/git_gitolite:1.0.0
     volumes:
-      - ${SRV_APPDATA}/persistent/home:/home/git
-      - ${SRV_APPDATA}/persistent/hostkeys:/etc/ssh/hostkeys
+      - '{{= stack.data_dir}}/persistent/home:/home/git:rw'
+      - '{{= stack.data_dir}}/persistent/hostkeys:/etc/ssh/hostkeys:ro'
     ports:
       - '{{= hosts.backend.port }}:22'
     networks:
@@ -15,8 +15,8 @@ services:
   cgit:
     image: registry.terry.cloud/stack/git_cgit:1.0.1
     volumes:
-      - ${SRV_APPDATA}/persistent/home:/home/git
-      - ${SRV_APPDATA}/resources/frontend-htpasswd:/etc/lighttpd/.passwd
+      - '{{= stack.data_dir}}/persistent/home:/home/git:ro'
+      - '{{= stack.data_dir}}/resources/frontend-htpasswd:/etc/lighttpd/.passwd:ro'
     networks:
       - revprox_ingress
     deploy:
